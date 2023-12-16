@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -16,9 +18,9 @@ function App() {
           ? (t = { id: t.id, todo })
           : { id: t.id, todo: t.todo }
       );
-      setTodos(updatedTodos)
-      setEditId(0) // Now we are no longer in edit mode so make the edit mode 0
-      setTodo('') // Make the todo in input to empty 
+      setTodos(updatedTodos);
+      setEditId(0); // Now we are no longer in edit mode so make the edit mode 0
+      setTodo(""); // Make the todo in input to empty
       return;
     }
 
@@ -43,25 +45,17 @@ function App() {
     <div className="App">
       <div className="container">
         <h1>ToDo List App</h1>
-        <form className="todoForm" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-          />
-          <button type="submit">{editId ? "Edit" : "Go"}</button>
-        </form>
-        <ul className="allTodos">
-          {todos.map((t) => (
-            <li className="singleTodo">
-              <span className="todoText" key={t.id}>
-                {t.todo}
-              </span>
-              <button onClick={() => handleEdit(t.id)}>Edit</button>
-              <button onClick={() => handleDelete(t.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
+        <TodoForm
+          handleSubmit={handleSubmit}
+          todo={todo}
+          editId={editId}
+          setTodo={setTodo}
+        />
+        <TodoList 
+         todos={todos}
+         handleEdit={handleEdit}
+         handleDelete={handleDelete}
+        />
       </div>
     </div>
   );
